@@ -34,38 +34,38 @@ $(document).ready(function () {
 });
 
 function updateUserInfo(data) {
-    var settings = {
-        "url": "https://crafty.planckstudio.in/api/v1/",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json",
-            "Cookie": "PHPSESSID=4602228f627a660c5e9734f7cd24090d"
-        },
-        "data": JSON.stringify({
-            "type": "update",
-            "param": {
-                "task": "userInfo",
-                "data": data
-            }
-        }),
-    };
+    // var settings = {
+    //     "url": "https://crafty.planckstudio.in/api/v1/",
+    //     "method": "POST",
+    //     "timeout": 0,
+    //     "headers": {
+    //         "Content-Type": "application/json",
+    //         "Cookie": "PHPSESSID=4602228f627a660c5e9734f7cd24090d"
+    //     },
+    //     "data": JSON.stringify({
+    //         "type": "update",
+    //         "param": {
+    //             "task": "userInfo",
+    //             "data": data
+    //         }
+    //     }),
+    // };
 
-    $.ajax(settings).done(function (response) {
-        if (response.result === null) {
-            swal({
-                title: 'User information updated',
-                text: 'Refreshing in few moments',
-                type: 'success',
-                confirmButtonText: 'Sure'
-            })
+    // $.ajax(settings).done(function (response) {
+    //     if (response.result === null) {
+    //         swal({
+    //             title: 'User information updated',
+    //             text: 'Refreshing in few moments',
+    //             type: 'success',
+    //             confirmButtonText: 'Sure'
+    //         })
 
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+    //         setTimeout(function () {
+    //             location.reload();
+    //         }, 2000);
 
-        }
-    });
+    //     }
+    // });
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -197,7 +197,7 @@ function userLogin() {
 
 function getState() {
     var settings = {
-        "url": "../api/api/getstate.php",
+        "url": decodeURI(Cookies.get("base_url")) + "api/getstate.php",
         "method": "GET",
         "timeout": 0,
         "headers": {

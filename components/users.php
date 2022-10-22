@@ -1,6 +1,7 @@
 <?php 
 
 require_once '../includes/database.php';
+setcookie("base_url", $_SERVER["BASE_URL"], time() + (86400 * 30), "/");
 $data = [];
 
 if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user`;")) {
@@ -57,6 +58,7 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
     <script src="../assets/vendor/cryptojs/rollups/md5.js"></script>
     <script src="../assets/js/prettytime.js"></script>
     <script src="../assets/js/render.js"></script>
+    <script src="../assets/vendor/js-cookie/js.cookie.js"></script>
 
 </head>
 
@@ -443,7 +445,7 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
 
         async function getLatestUser(id) {
             var settings = {
-                "url": "http://localhost/asktoagri/dashboard/api/getusers.php?id="+id,
+                "url": decodeURI(Cookies.get("base_url")) + "api/getusers.php?id="+id,
                 "method": "POST",
                 "timeout": 0,
                 "headers": {
@@ -609,7 +611,7 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
 
         function renderUserDialogData(id) {
             var settings = {
-                "url": "../api/user.php?id="+id,
+                "url": decodeURI(Cookies.get("base_url")) + "api/user.php?id="+id,
                 "method": "GET",
                 "timeout": 0,
                 "headers": {

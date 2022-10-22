@@ -1,6 +1,7 @@
 <?php
 
 require_once '../includes/database.php';
+setcookie("base_url", $_SERVER["BASE_URL"], time() + (86400 * 30), "/");
 
 $data = [];
 
@@ -280,7 +281,7 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_solution`;")) {
     <script>
         $(document).ready(function () {
 
-            getState();
+            getState("<?php echo $_SERVER['BASE_URL'];?>");
             // setData();
 
             var data = JSON.parse(localStorage.getItem("state"));
