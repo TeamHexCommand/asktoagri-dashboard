@@ -609,8 +609,8 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
 
         function renderUserDialogData(id) {
             var settings = {
-                "url": "http://localhost/asktoagri/dashboard/api/user.php?id="+id,
-                "method": "POST",
+                "url": "../api/user.php?id="+id,
+                "method": "GET",
                 "timeout": 0,
                 "headers": {
                     "Content-Type": "application/json",

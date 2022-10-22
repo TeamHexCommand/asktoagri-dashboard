@@ -107,26 +107,7 @@ function renderUsersdHeader() {
 }
 
 async function getLastUserId() {
-
-    var settings = {
-        "url": "https://crafty.planckstudio.in/api/v1/",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json",
-            "Cookie": "PHPSESSID=3d6e09a416dee3ce45e95b04296b8bcb"
-        },
-        "data": JSON.stringify({
-            "type": "get",
-            "param": {
-                "task": "lastUserId"
-            }
-        }),
-    };
-
-    return $.ajax(settings).done(function (response) {
-        return response.result;
-    });
+//
 }
 
 

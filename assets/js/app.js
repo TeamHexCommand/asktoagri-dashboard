@@ -197,21 +197,12 @@ function userLogin() {
 
 function getState() {
     var settings = {
-        "url": "http://localhost/asktoagri/dashboard/api/getstate.php",
+        "url": "../api/api/getstate.php",
         "method": "GET",
         "timeout": 0,
         "headers": {
             "Content-Type": "application/json"
         },
-        // "data": JSON.stringify({
-        //     "type": "get",
-        //     "param": {
-        //         "task": "userState",
-        //         "data": {
-        //             "id": localStorage.getItem("userid")
-        //         }
-        //     }
-        // }),
     };
 
     $.ajax(settings).done(function (response) {
