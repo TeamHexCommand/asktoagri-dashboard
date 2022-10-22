@@ -1,0 +1,61 @@
+:root {
+    --primary: #6b62fe;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Round"),
+    url(../fonts/material.otf) format("opentype");
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: "liga";
+}
+
+.navbar-vertical .navbar-nav .nav-link > i {
+    font-size: 24px!important;
+    color: var(--primary);
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+  height: 0;
+}
+
+.visible {
+  display: table-row;
+  visibility: visible;
+  height: auto;
+}
+
+.modal{
+  pointer-events: none!important;
+}
+
+.modal-dialog{
+  pointer-events: all!important;
+}

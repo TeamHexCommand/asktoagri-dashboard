@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <script>
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+  </script>
+  <title>Loading</title>
+  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script type="module" src="./assets/js/index.js"></script>
+  <style>
+    .spinner {
+      width: 4rem;
+      height: 4rem;
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      background: #6b62fe;
+      border-radius: 50%;
+      animation: pulse 1s ease-in-out infinite;
+      transform: translate(-50%, -50%) scale(0);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 0;
+      }
+    }
+
+    :root {
+      --primary: #6b62fe !important;
+    }
+
+    body,
+    html {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #loader {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes opacity {
+      0% {
+        opacity: 0
+      }
+
+      20% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @-moz-keyframes opacity {
+      0% {
+        opacity: 0
+      }
+
+      20% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes opacity {
+      0% {
+        opacity: 0
+      }
+
+      20% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+
+    @-o-keyframes opacity {
+      0% {
+        opacity: 0
+      }
+
+      20% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <center id="loader">
+    <div class="spinner"></div>
+  </center>
+</body>
+
+</html>
