@@ -4,25 +4,38 @@ require_once '../includes/database.php';
 
 $data = [];
 $state = [];
+$debug = $_SERVER['DEBUG'];
 
 if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,count(*) as total FROM `hc_user` WHERE YEAR(`createdAt`) = YEAR(now()) GROUP BY MONTH(`createdAt`);")) {
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["state"]["users"]["all"] = $row;
+    if($debug == "TRUE") {
+        var_dump($row);
+    }
 }
 
 if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,count(*) as total FROM `hc_user` WHERE YEAR(`createdAt`) = YEAR(now()) AND `isExpert` = 0 GROUP BY MONTH(`createdAt`);")) {
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["state"]["users"]["farmer"] = $row;
+    if($debug == "TRUE") {
+        var_dump($row);
+    }
 }
 
 if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,count(*) as total FROM `hc_user` WHERE YEAR(`createdAt`) = YEAR(now()) AND `isExpert` = 1 GROUP BY MONTH(`createdAt`);")) {
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["state"]["users"]["expert"] = $row;
+    if($debug == "TRUE") {
+        var_dump($row);
+    }
 }
 
 if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,count(*) as total FROM `hc_user` WHERE YEAR(`createdAt`) = YEAR(now()) AND `isAdmin` = 1 GROUP BY MONTH(`createdAt`);")) {
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["state"]["users"]["admin"] = $row;
+    if($debug == "TRUE") {
+        var_dump($row);
+    }
 }
 
 if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,count(*) as total FROM `hc_query` WHERE YEAR(`createdAt`) = YEAR(now()) GROUP BY MONTH(`createdAt`);")) {
@@ -114,8 +127,6 @@ if($result = $con->query("SELECT SQL_NO_CACHE MONTHNAME(`createdAt`) monthName,c
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["state"]["solution"]["uncommon"]["time"] = $row;
 }
-
-
 
 header("Content-Type: application/json; charset=UTF-8");
 
