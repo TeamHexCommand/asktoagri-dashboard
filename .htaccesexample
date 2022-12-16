@@ -1,0 +1,9 @@
+<IfModule mod_env.c>
+    SetEnv DB_HOST localhost
+    SetEnv DB_PORT 3306
+    SetEnv DB_DATABASE {{database}}
+    SetEnv DB_USER {{username}}
+    SetEnv DB_PASSWORD {{password}}
+    SetEnv BASE_URL {{baseurl}}
+    SetEnv DEBUG FALSE
+</IfModule>
