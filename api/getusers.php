@@ -2,6 +2,10 @@
 
 require_once '../includes/database.php';
 
+// if($_SERVER['HTTP_REFERER'] !== $_SERVER['BASE_HOST']){
+//     die('Unauthorized access');
+// }
+
 $data = [];
 
 $id = 0;
@@ -17,6 +21,8 @@ if($result = $con->query($query)) {
     $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
     $data["users"] = $row;
 }
+
+$data["host"] = $_SERVER['HTTP_REFERER'];
 
 header("Content-Type: application/json; charset=UTF-8");
 

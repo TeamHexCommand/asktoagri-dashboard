@@ -4,26 +4,11 @@ require_once '../includes/database.php';
 setcookie("base_url", $_SERVER["BASE_URL"], time() + (86400 * 30), "/");
 $data = [];
 
-if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user`;")) {
+if ($result = $con->query("SELECT count(*) as `total` FROM `hc_category`;")) {
     $row = $result->fetch_row();
-    $data["total_users"] = $row[0];
+    $data["total_category"] = $row[0];
 }
 
-if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isExpert` = 0;")) {
-    $row = $result->fetch_row();
-    $data["total_farmers"] = $row[0];
-}
-
-
-if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isExpert` = 1;")) {
-    $row = $result->fetch_row();
-    $data["total_experts"] = $row[0];
-}
-
-if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBanned` = 1;")) {
-    $row = $result->fetch_row();
-    $data["total_banned"] = $row[0];
-}
 ?>
 
 <!DOCTYPE html>
@@ -32,14 +17,14 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="Planck Studio">
+    <meta name="author" content="PlanckStudio">
     <script>
         window.nodeRequire = require;
         delete window.require;
         delete window.exports;
         delete window.module;
     </script>
-    <title>Users</title>
+    <title>Category</title>
     <!-- Favicon -->
     <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
     <!-- Fonts -->
@@ -242,19 +227,19 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
                     <hr class="my-3"><!-- Heading -->
                     <h6 class="navbar-heading p-0 text-muted">Manage</h6><!-- Navigation -->
                     <ul class="navbar-nav mb-md-3">
-                        <li class="nav-item"><a class="nav-link active" href="#navbar-users" data-toggle="collapse"
-                                role="button" aria-expanded="true" aria-controls="navbar-users"><i
+                        <li class="nav-item"><a class="nav-link" href="#navbar-users" data-toggle="collapse"
+                                role="button" aria-expanded="false" aria-controls="navbar-users"><i
                                     class="material-icons">person</i><span class="nav-link-text">Users</span></a>
-                            <div class="collapse show" id="navbar-users">
+                            <div class="collapse" id="navbar-users">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item"><a href="./users.php" class="nav-link">User</a></li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#navbar-category" data-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="navbar-category"><i
+                        <li class="nav-item"><a class="nav-link active" href="#navbar-category" data-toggle="collapse"
+                                role="button" aria-expanded="true" aria-controls="navbar-category"><i
                                     class="material-icons">category</i><span class="nav-link-text">Category</span></a>
-                            <div class="collapse" id="navbar-category">
+                            <div class="collapse show" id="navbar-category">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item"><a href="./category.php" class="nav-link">Category</a></li>
                                 </ul>
@@ -289,36 +274,44 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-6 col-7">
-                            <h6 class="h2 text-white d-inline-block mb-0">Users</h6>
+                            <h6 class="h2 text-white d-inline-block mb-0">Category</h6>
                             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Users</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Category</li>
                                 </ol>
                             </nav>
                         </div>
                     </div> <!-- Card stats -->
                     <div class="row">
+                        <div class="col-xl-6 col-md-12">
+                            <div class="card card-stats">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Add Category</h5>
+                                    <div class="input-group mb-3 mt-2">
+                                        <input type="text" id="category-input" class="form-control" placeholder="Category name" aria-label="Category name" aria-describedby="button-add-category">
+                                        <button class="btn btn-outline-primary mb-0" type="button" id="button-add-category">ADD</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card card-stats">
                                 <!-- Card body -->
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Total users</h5> <span
-                                                class="h2 font-weight-bold mb-0 count" id="total-users"><?php echo $data["total_users"]; ?></span>
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Total category</h5> <span
+                                                class="h2 font-weight-bold mb-0 count" id="total-users"><?php echo $data["total_category"]; ?></span>
                                         </div>
                                         <div class="col-auto">
                                             <div
                                                 class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                                                <i class="material-icons">people</i> </div>
+                                                <i class="material-icons">category</i> </div>
                                         </div>
                                     </div>
-                                    <p class="mt-3 mb-0 text-sm"> <span class="text-success mr-2"><i
-                                                class="fa fa-arrow-up"></i>&nbsp;<span
-                                                id="total-users-per"></span>%</span> <span class="text-nowrap">Since
-                                            last month</span> </p>
+                                    <p class="mt-3 mb-0 text-sm"> <span class="text-success mr-2">Lifetime</span> </p>
                                 </div>
                             </div>
                         </div>
@@ -328,57 +321,16 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Farmers</h5> <span
-                                                class="h2 font-weight-bold mb-0 count" id="total-new-users"><?php echo $data["total_farmers"]; ?></span>
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Trending</h5><span
+                                                class="h2 font-weight-bold mb-0" id="trending-category"></span>
                                         </div>
                                         <div class="col-auto">
                                             <div
                                                 class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                                                <i class="material-icons">person</i></div>
+                                                <i class="material-icons">trending_up</i></div>
                                         </div>
                                     </div>
-                                    <p class="mt-3 mb-0 text-sm"> <span class="text-success mr-2"><i
-                                                class="fa fa-arrow-up"></i>&nbsp;<span
-                                                id="total-new-per"></span>%</span> <span class="text-nowrap">Since last
-                                            month</span> </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-stats">
-                                <!-- Card body -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Expert</h5> <span
-                                                class="h2 font-weight-bold mb-0 count" id="total-premium"><?php echo $data["total_experts"]; ?></span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div
-                                                class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                                                <i class="material-icons">star</i></div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-sm"> <span class="text-nowrap">Lifetime</span> </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-stats">
-                                <!-- Card body -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Banned</h5> <span
-                                                class="h2 font-weight-bold mb-0 count" id="total-banned"><?php echo $data["total_banned"]; ?></span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div
-                                                class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                                                <i class="material-icons">not_interested</i></div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-sm"><span class="text-nowrap">Lifetime</span> </p>
+                                    <p class="mt-3 mb-0 text-sm"> <span class="text-success mr-2">Lifetime</p>
                                 </div>
                             </div>
                         </div>
@@ -393,20 +345,20 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h3 class="mb-0">Latest Users</h3>
+                            <h3 class="mb-0">All Category</h3>
                         </div>
                         <div class="table-responsive active">
                             <table class="table align-items-center table-flush table-striped" id="table-latest-users">
                                 <thead class="thead-light">
                                     <tr style="tetx-align: center!important;">
                                         <th scope="col">ID</th>
-                                        <th scope="col">Mobile</th>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Date</th>
-                                        <!-- <th scope="col"></th> -->
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Total Query</th>
+                                        <th scope="col">Total Solution</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="list" id="users-table-latest">
+                                <tbody class="list" id="category-table">
 
                                 </tbody>
                             </table>
@@ -451,10 +403,83 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
     <script src="../assets/js/argon.js?v=1.1.0"></script>
     <script>
 
+        async function addCategory(name) {
 
-        async function getLatestUser(id) {
+            var base = "<?php ?>"
+
             var settings = {
-                "url": decodeURI(Cookies.get("base_url")) + "api/getusers.php?id="+id,
+                "url": "<?php echo $_SERVER['API_URL'];?>",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "request": "add",
+                    "type": "category",
+                    "filter": "",
+                    "param": {
+                    "name": name
+                    }
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                if(response.code == 200) {
+                    swal({
+                        title: name,
+                        text: 'New Category Added',
+                        type: 'success',
+                        confirmButtonText: 'Sure'
+                    })
+
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            var data = JSON.parse(localStorage.getItem("state"));
+            category = data.state.query.all.category;
+            console.log(data.state.query.all.category);
+
+            let max = category[0].total;
+            let min = category[0].total;
+            let trendingCategory = category[0].category;
+            let leastCategory = category[0].category;
+            for (let i = 1; i < category.length; ++i) {
+                if (category[i].total > max) {
+                    max = category[i].total;
+                    trendingCategory = category[i].category;
+                }
+
+                if (category[i].total < min) {
+                    min = category[i].total;
+                    leastCategory = category[i].category;
+                }
+            }
+
+            $("#trending-category").text(trendingCategory);
+            $("#least-category").text(leastCategory);
+
+            $('#button-add-category').on('click', function (e) {
+                var cat = $("#category-input").val();
+                if(cat != null || cat != "") {
+                    addCategory(cat);
+                }
+            });
+            
+            setData();
+
+        });
+
+        async function getCategory(id) {
+            var settings = {
+                "url": decodeURI(Cookies.get("base_url")) + "api/getcategory.php?id="+id,
                 "method": "POST",
                 "timeout": 0,
                 "headers": {
@@ -467,222 +492,6 @@ if ($result = $con->query("SELECT count(*) as `total` FROM `hc_user` where `isBa
             });
         }
 
-        $(document).ready(function () {
-
-            $('#userEditDialog').on('shown.bs.modal', function () {
-                $('#userEditName').trigger('focus');
-                // $('#userEditDialog').off('keydown.dismiss.bs.modal');
-            });
-
-            setData();
-
-            var totalPage = 0;
-            var nextUser = 0;
-
-            // if (localStorage.getItem('isLogin') == "false" || localStorage.getItem('isLogin') == null) {
-            //     window.location.replace("./login.html");
-            // } else {
-            //     setData();
-            // }
-        });
-
-        function showPage(page, ele) {
-            var current = $(".visible").first().attr("page");
-            var next = current;
-            var last = $(".hidden").last().attr("page")
-
-            if (page == 0) {
-                next--;
-            } else {
-                next++;
-            }
-
-            if ((totalPage - 1) == $(".visible").last().attr("page")) {
-                var p = totalPage;
-                var at = `tr`;
-                getLatestUser(parseInt($(at).last().attr("uid") - 1), 50).then(res => {
-                    var data = res.users;
-
-                    var total = 0;
-                    var page = $(".visible").last().attr("page");
-
-                    nextUser = parseInt(data[(data.length - 1)].id);
-
-                    vi = true;
-
-                    for (var i = 0; i < data.length; i++, total++) {
-
-                        if (total > 4) {
-                            total = 0;
-                            page++;
-                            vi = false
-                            totalPage = page;
-                        }
-
-                        var userTable = {
-                            "id": data[i].id,
-                            "mobile": data[i].mobile,
-                            "type": parseInt(data[i].isExpert),
-                            "createdAt": data[i].createdAt,
-                            "actionEdit": "renderUserDialogData('" + data[i].id + "');return false;",
-                            "statusClass": "",
-                            "actionSend": "renderUserDialogData('" + data[i].id + "');return false;",
-                            "page": parseInt(page)
-                        }
-                        renderLatestUserTable(userTable, vi);
-                    }
-
-                });
-
-                totalPage = $(".visible").last().attr("page");
-            }
-
-            if (next >= 0 && next <= last) {
-                $(".visible").each(function () {
-                    $(this).removeClass("visible").addClass("hidden");
-                });
-
-                $(`[page=${next}]`).each(function () {
-                    $(this).removeClass("hidden").addClass("visible");
-                });
-            }
-        }
-
-
-        function setData() {
-
-            // var data = JSON.parse(localStorage.getItem("state"));
-
-            // var totalPer = (data.users.total - data.users.currentMonth) / 100;
-            // var totalNewPer = (data.users.currentMonth - data.users.previousMonth) / 100;
-            // var totalNewPerformance = ((data.actions.total / data.actions.previousMonth) * 100);
-
-            // $("#total-users").text(0).attr("data-target", data.users.total);
-            // $("#total-users-per").text(totalPer.round(2));
-            // $("#total-new-users").text(0).attr("data-target", data.users.currentMonth);
-            // $("#total-new-per").text(totalNewPer.round(2));
-
-            // $("#total-premium").text(0).attr("data-target", parseInt(data.users.totalPremium));
-            // $("#total-banned").text(0).attr("data-target", parseInt(data.users.totalBanned));
-
-            // counter();
-
-            getLatestUser(0).then(res => {
-                    var data = res.users;
-                    var total = 0;
-                    var page = 0;
-
-                    nextUser = parseInt(data[(data.length - 1)].ID);
-
-                    for (var i = 0; i < data.length; i++, total++) {
-
-                        if (total > 4) {
-                            total = 0;
-                            page++;
-                            totalPage = page;
-                        }
-
-                        var userTable = {
-                            "id": data[i].id,
-                            "mobile": data[i].mobile,
-                            "type": parseInt(data[i].isExpert),
-                            "createdAt": data[i].createdAt,
-                            "actionEdit": "renderUserDialogData('" + data[i].id + "');return false;",
-                            "statusClass": "",
-                            "actionSend": "renderUserDialogData('" + data[i].id + "');return false;",
-                            "page": parseInt(page)
-                        }
-                        renderLatestUserTable(userTable);
-                    }
-                });
-        }
-
-        function counter() {
-            const counters = document.querySelectorAll('.count');
-            const speed = 5;
-
-            counters.forEach((counter) => {
-                const updateCount = () => {
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    const count = parseInt(counter.innerText);
-                    const increment = Math.trunc(target / speed);
-
-                    if (count < target) {
-                        counter.innerText = count + increment;
-                        setTimeout(updateCount, 1);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCount();
-            });
-        }
-
-        function renderUserDialogData(id) {
-            var settings = {
-                "url": decodeURI(Cookies.get("base_url")) + "api/user.php?id="+id,
-                "method": "GET",
-                "timeout": 0,
-                "headers": {
-                    "Content-Type": "application/json",
-                }
-            };
-
-            $.ajax(settings).done(function (response) {
-                var data = response.result;
-                var statusClass = "text-info";
-
-                $("#userEditStatus").val(parseInt(data.user_status)).change();
-
-                switch (parseInt(data.user_status)) {
-                    case 3:
-                        data.user_status = "Tester";
-                        statusClass = "text-success";
-                        break;
-                    case 2:
-                        data.user_status = "Premium";
-                        statusClass = "text-success";
-                        break;
-                    case 0:
-                        data.user_status = "Free";
-                        statusClass = "text-info";
-                        break;
-                    case 1:
-                        data.user_status = "Banned";
-                        statusClass = "text-default";
-                        break;
-                    default:
-                        data.user_status = "text-info";
-                        break;
-                }
-
-                $("#userEditDialogName").text("Name");
-                $("#userEditDialogEmail").text("Email");
-                $("#userEditDialogStatus").text("Status");
-                $("#userEditDialogStatusClass").attr("class", "text-info");
-                $("#userEditUpdate").attr("uid", id);
-                $("#userEditDialogProfile").attr("src", "");
-                $("#userEditName").val("");
-                $("#userEditEmail").val("");
-
-                $("#userEditDialogName").text(data.user_first_name);
-                $("#userEditDialogEmail").text(data.user_email);
-                $("#userEditDialogStatus").text(data.user_status);
-                $("#userEditPoints").val(data.user_points);
-                $("#userEditDialogStatusClass").attr("class", statusClass);
-                $("#userEditDialogProfile").attr("src", getGravatarImage(data.user_email));
-
-                $("#userEditName").val(data.user_first_name);
-                $("#userEditEmail").val(data.user_email);
-
-                if (parseInt(data.user_newsletter)) {
-                    $("#userEditNewsletter").prop('checked', true);
-                }
-                else {
-                    $("#userEditNewsletter").prop('checked', false);
-                }
-            });
-        }
     </script>
 </body>
 

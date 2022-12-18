@@ -43,9 +43,51 @@ function createHtmlSection(html) {
 
 }
 
-
-
 function renderLatestUserTable(data, vi = false) {
+
+    var html = renderHtml["userRow"].replace("truid", "tr uid");
+    html = html.split("\%").join("\$");
+
+    var statusClass = "bg-success";
+
+    switch (data.type) {
+        case 0:
+            data.type = "Farmer";
+            statusClass = "bg-success";
+            break;
+        case 1:
+            data.type = "Expert";
+            statusClass = "bg-info";
+            break;
+        default:
+            data.type = "Farmer";
+            statusClass = "bg-info";
+            break;
+    }
+
+    if (data.page == 0) {
+        data.visible = "visible";
+    } else {
+        data.visible = "hidden";
+    }
+
+    if (vi) {
+        data.visible = "visible";
+    }
+
+    html = html.split("{{data.id}}").join(data.id);
+    html = html.split("{{data.mobile}}").join(data.mobile);
+    html = html.split("{{data.type}}").join(data.type);
+    html = html.split("{{data.statusClass}}").join(statusClass);
+    html = html.split("{{data.createdAt}}").join(prettyTime(data.createdAt));
+    html = html.split("{{data.actionEdit}}").join(data.actionEdit);
+    html = html.split("{{data.actionSend}}").join(data.actionSend);
+    html = html.split("{{data.page}}").join(data.page);
+    html = html.split("{{data.visible}}").join(data.visible);
+    $("#users-table-latest").append(html);
+}
+
+function renderCategoryTable(data, vi = false) {
 
     var html = renderHtml["userRow"].replace("truid", "tr uid");
     html = html.split("\%").join("\$");
